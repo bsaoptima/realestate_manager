@@ -12,7 +12,12 @@ from .forms import NewUserForm
 def homepage(request):
     return render(request=request, #allows you to reference things inside template like users, etc.
                   template_name="main/dashboard.html", #tells django where to find template
-                  context={"assets": Asset.objects.all}) #categories is now a variable
+                  context={"assets": Asset.objects.all()}) #assets is now a variable
+
+def show_assets(request):
+    return render(request=request,
+                  template_name="main/assets.html",
+                  context={"assets": Asset.objects.all()})
 
 #Register function
 def register(request):
