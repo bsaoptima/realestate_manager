@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Tutorial, TutorialSeries, TutorialCategory, Asset
+from .models import Asset
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import logout, authenticate, login
@@ -8,43 +8,11 @@ from .forms import NewUserForm
 
 '''This is where models and views are created'''
 
-'''
-def single_slug(request, single_slug):
-    assets = [a.asset_slug for a in Asset.objects.all()]
-    categories = [c.category_slug for c in TutorialCategory.objects.all()]
-    if single_slug in categories:
-        matching_series = TutorialSeries.objects.filter(tutorial_category__category_slug=single_slug)
-
-        series_url={}
-
-        for m in matching_series.all():
-            part_one = Tutorial.objects.filter(tutorial_series__tutorial_series=m.tutorial_series).earliest("tutorial_published")
-            series_url[m] = part_one.tutorial_slug
-
-        return render(request,
-                      "main/category.html",
-                      {"part_ones": series_url})
-
-    tutorials = [t.tutorial_slug for t in Tutorial.objects.all()]
-    if single_slug in tutorials:
-        this_tutorial= Tutorial.objects.get(tutorial_slug=single_slug)
-        tutorial_from_series = Tutorial.objects.filter(tutorial_series__tutorial_series=this_tutorial.tutorial_series).order_by('tutorial_published')
-        this_tutorial_idx = list(tutorial_from_series).index(this_tutorial)
-
-        return render(request=request,
-                      template_name='main/tutorial.html',
-                      context={"tutorial":this_tutorial,
-                               "sidebar":tutorial_from_series,
-                               "this_tut_idx":this_tutorial_idx})
-
-    return HttpResponse(f"'{single_slug}' does not correspond to anything we know of!")
-'''
-
 #Define the homepage
 def homepage(request):
     return render(request=request, #allows you to reference things inside template like users, etc.
                   template_name="main/dashboard.html", #tells django where to find template
-                  context={"asset": Asset.objects.all}) #categories is now a variable
+                  context={"assets": Asset.objects.all}) #categories is now a variable
 
 #Register function
 def register(request):
