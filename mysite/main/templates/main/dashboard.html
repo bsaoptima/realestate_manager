@@ -2,17 +2,15 @@
 
 {% block content %}
     <div class="row">
-        {% for asset in assets %}
-            <div class="col s12 m6 l2">
-                <a href="{{asset.asset_slug}}", style="color:#000">
-                    <div class="card hoverable">
-                        <div class="card-content">
-                            <div class="card-title">Total Cashflow</div>
-                            <p>{{cashflow}}</p>
-                        </div>
+        <div class="col s12 m6 l2">
+            <a href="{{asset.asset_slug}}", style="color:#000">
+                <div class="card hoverable">
+                    <div class="card-content">
+                        <div class="card-title">Total Cashflow</div>
+                        <p>{{People.cashflow}}</p>
                     </div>
-                </a>
-            </div>
-        {% endfor %}
+                </div>
+            </a>
+        </div>
     </div>
 {% endblock %}

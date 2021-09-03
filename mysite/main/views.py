@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Asset
+from .models import Asset, People
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import logout, authenticate, login
@@ -8,16 +8,24 @@ from .forms import NewUserForm
 
 '''This is where models and views are created'''
 
+CASHFLOW = Asset.objects.filter()
+
 #Define the homepage
 def homepage(request):
     return render(request=request, #allows you to reference things inside template like users, etc.
                   template_name="main/dashboard.html", #tells django where to find template
-                  context={"assets": Asset.objects.all()}) #assets is now a variable
+                  context={"assets": Asset.objects.all(),
+                           "peoples": People.objects.all()} #assets is now a variable
+    )
 
 def show_assets(request):
+
     return render(request=request,
                   template_name="main/assets.html",
-                  context={"assets": Asset.objects.all()})
+                  context={"assets": Asset.objects.all(),
+                           "peoples": People.objects.all()}
+    )
+
 
 #Register function
 def register(request):
