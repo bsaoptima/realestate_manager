@@ -1,8 +1,6 @@
 from django.db import models
 from datetime import datetime
 
-CHOICES = (('TENANT', 'Tenant'), ('LANDLORD', 'Landlord'))
-
 class People(models.Model):
     Owner = models.BooleanField()
     people_name = models.CharField(max_length=200)

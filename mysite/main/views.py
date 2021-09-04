@@ -8,7 +8,8 @@ from .forms import NewUserForm
 
 '''This is where models and views are created'''
 
-CASHFLOW = Asset.objects.filter()
+OWNERS = People.objects.filter(Owner=True)
+TENANTS = People.objects.filter(Owner=False)
 
 #Define the homepage
 def homepage(request):
@@ -19,7 +20,6 @@ def homepage(request):
     )
 
 def show_assets(request):
-
     return render(request=request,
                   template_name="main/assets.html",
                   context={"assets": Asset.objects.all(),
