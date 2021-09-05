@@ -11,18 +11,20 @@ from .forms import NewUserForm
 OWNERS = People.objects.filter(Owner=True)
 TENANTS = People.objects.filter(Owner=False)
 
+
 #Define the homepage
 def homepage(request):
-    return render(request=request, #allows you to reference things inside template like users, etc.
-                  template_name="main/dashboard.html", #tells django where to find template
+
+    return render(request=request,
+                  template_name="main/dashboard.html",
                   context={"assets": Asset.objects.all(),
-                           "peoples": People.objects.all()} #assets is now a variable
+                           "peoples": People.objects.all()}
     )
 
 def show_assets(request):
     return render(request=request,
-                  template_name="main/assets.html",
-                  context={"assets": Asset.objects.all(),
+                  template_name="main/test_assets.html",
+                  context={"assets": Asset.objects.get(id=1), #changes THISSSSSSS!!!!!!!
                            "peoples": People.objects.all()}
     )
 
