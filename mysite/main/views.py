@@ -11,10 +11,10 @@ from .forms import NewUserForm
 OWNERS = People.objects.filter(Owner=True)
 TENANTS = People.objects.filter(Owner=False)
 
+def calc_cashflow(request):
+    pass
 
-#Define the homepage
 def homepage(request):
-
     return render(request=request,
                   template_name="main/dashboard.html",
                   context={"assets": Asset.objects.all(),
@@ -23,8 +23,8 @@ def homepage(request):
 
 def show_assets(request):
     return render(request=request,
-                  template_name="main/test_assets.html",
-                  context={"assets": Asset.objects.get(id=1), #changes THISSSSSSS!!!!!!!
+                  template_name="main/assets.html",
+                  context={"assets": Asset.objects.all(),
                            "peoples": People.objects.all()}
     )
 
