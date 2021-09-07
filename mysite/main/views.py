@@ -8,9 +8,6 @@ from .forms import NewUserForm
 
 '''This is where models and views are created'''
 
-OWNERS = People.objects.filter(Owner=True)
-TENANTS = People.objects.filter(Owner=False)
-
 def calc_cashflow(request):
     pass
 

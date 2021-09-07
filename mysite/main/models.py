@@ -2,7 +2,10 @@ from django.db import models
 from datetime import datetime
 
 class People(models.Model):
-    Owner = models.BooleanField()
+    OWNER = 'owner'
+    TENANT = 'tenant'
+    TYPES = ((OWNER, 'Owner'), (TENANT, 'Tenant'))
+    type = models.CharField(max_length=15, blank=True, choices=TYPES)
     people_name = models.CharField(max_length=200)
     people_surname = models.CharField(max_length=200)
     people_phone_number = models.CharField(max_length=200)
@@ -15,12 +18,10 @@ class People(models.Model):
         return self.people_name
 
 class Tenant(models.Model):
-    people = models.OneToOneField(People, on_delete=models.CASCADE, primary_key=True, limit_choices_to={'Owner': False})
+    tenants = People.objects.filter(type=People.TYPES[1])
 
 class Owner(models.Model):
-    people = models.OneToOneField(People, on_delete=models.CASCADE, primary_key=True, limit_choices_to={'Owner': True})
-    cashflow = None
-
+    owners = People.objects.filter(type=People.TYPES[0])
 
 class Asset(models.Model):
     asset_location = models.CharField(max_length=200)
@@ -29,10 +30,8 @@ class Asset(models.Model):
     asset_rent = models.FloatField()
     asset_slug = models.CharField(max_length=200, default=1)
     asset_published = models.DateTimeField('date published', default=datetime.now())
-
-    '''Problems with these lines, django.db.utils.IntegrityError: UNIQUE constraint failed: new__main_asset.asset_owner_id'''
-    asset_tenant = models.ForeignKey(Tenant, related_name="tenant", on_delete=models.CASCADE)
-    asset_owner = models.ForeignKey(Owner, related_name="owner", on_delete=models.CASCADE)
+    asset_tenant = models.OneToOneField(Tenant, related_name="tenant", on_delete=models.CASCADE)
+    asset_owner = models.OneToOneField(Owner, related_name="owner", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.asset_location

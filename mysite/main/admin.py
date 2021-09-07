@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Asset, People
+from .models import Asset, People, Tenant, Owner
 from tinymce.widgets import TinyMCE
 from django.db import models
 
@@ -7,26 +7,32 @@ from django.db import models
 
 class PeopleAdmin(admin.ModelAdmin):
 
-    field_sets = [("Name/Surname", {"fields": ["people_name", "people_surname"]}),
-                  ("URL", {"fields": ["people_slug"]}),
-                  ("Occupation", {"fields": ["people_occupation"]}),
+    fieldsets = [
+        ("Type", {"fields": ["type"]}),
+        ("Information", {"fields": ["people_name",
+                                    "people_surname",
+                                    "people_phone_number",
+                                    "people_email",
+                                    "people_occupation",
+                                    "people_revenue"]}),
+        ("URL", {"fields": ["people_slug"]}),
     ]
 
-    formfield_overrides = {
-        models.TextField: {'widget': TinyMCE(attrs={'cols': 80, 'rows': 30})},
-    }
+    list_filter = ("type",)
 
 class AssetAdmin(admin.ModelAdmin):
 
-    fied_sets = [("Location/Date", {"fields": ["asset_location", "asset_published"]}),
+    fieldsets = [("Location/Date", {"fields": ["asset_location", "asset_published"]}),
                  ("URL", {"fields": ["asset_slug"]}),
                  ("Rent", {"fields": ["asset_rent"]}),
                  ("Tenant", {"fields": ["asset_tenant"]}),
     ]
 
-    formfield_overrides = {
-        models.TextField: {'widget': TinyMCE(attrs={'cols':80, 'rows':30})},
-    }
+class OwnerAdmin(admin.ModelAdmin):
+    list_display = ("owners",)
+
 
 admin.site.register(People, PeopleAdmin)
+admin.site.register(Tenant, PeopleAdmin)
+admin.site.register(Owner, OwnerAdmin)
 admin.site.register(Asset, AssetAdmin)
